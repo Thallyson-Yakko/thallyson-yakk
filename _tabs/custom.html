@@ -1,0 +1,25 @@
+---
+title: Custom Styles
+icon: fas fa-paint-brush
+order: 10
+---
+
+<style>
+/* 🔹 Remove a borda branca do avatar */
+.sidebar .site-avatar img {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 🔹 Remove o efeito de zoom no avatar */
+.sidebar .site-avatar img:hover {
+    transform: none !important;
+}
+
+/* 🔹 Remove os ícones do Twitter (X) e RSS */
+.sidebar .social-list a[href*="twitter.com"],
+.sidebar .social-list a[href*="x.com"],
+.sidebar .social-list a[href*="/feed.xml"] {
+    display: none !important;
+}
+</style>
