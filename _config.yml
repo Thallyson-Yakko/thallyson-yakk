@@ -18,6 +18,7 @@ title: Thallyson Yakko DevOps Engineer # the main title
 
 tagline: Compartilhando minha jornada rumo às certificações AWS SAA e SysOps, com dicas e estudos práticos sobre DevOps e Cloud Computing.
 
+favicon: /assets/favicon.ico
 
 description: >-# used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
