@@ -17,6 +17,8 @@ O intuito deste post é iniciar falando sobre VPC e desenvolver o projeto em fut
 - **EC2**: Serviço da AWS para instâncias de máquinas virtuais.
 
 ## Cenário
+
+![Cenario](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-26-13.png)
 1. Criar uma VPC.
 2. Criar um Internet Gateway e associá-lo à VPC.
 3. Criar uma subnet pública.
@@ -78,7 +80,7 @@ O intuito deste post é iniciar falando sobre VPC e desenvolver o projeto em fut
 ## Passo 7: Configuração de Segurança
 1. Crie um Grupo de Segurança permitindo SSH (porta 22) para qualquer IP (0.0.0.0/0).
 
-![Grupo de Segurança](./aassets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-20-07.png)
+![Grupo de Seguranca](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-20-07.png)
 
 ---
 
