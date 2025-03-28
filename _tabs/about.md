@@ -21,17 +21,17 @@ Estou em busca de novas oportunidades na área de **Cloud/DevOps**, onde possa c
 Se você está buscando um profissional dedicado e apaixonado por tecnologia, inovação e soluções escaláveis, estou à disposição para conversarmos sobre novas oportunidades. Vamos inovar e crescer juntos! 
 
 # Habilidades
-    - Linux (CentOS, Ubuntu, Amazon Linux)
-    - Web servers: Nginx e Apache
-    - Containerização e Orquestração: Docker e Kubernetes
-    - Infraestrutura como Código: Terraform
-    - Automação: Bash e Python
-    - Cloud Computing: AWS
-    - Monitoramento e Observabilidade: Prometheus, Grafana, Zabbix
-    - Metodologias DevOps e boas práticas de CI/CD
+   <li> Linux (CentOS, Ubuntu, Amazon Linux)</li>
+    <li> Web servers: Nginx e Apache</li>
+    <li> Containerização e Orquestração: Docker e Kubernetes</li>
+    <li> Infraestrutura como Código: Terraform</li>
+    <li> Automação: Bash e Python</li>
+    <li> Cloud Computing: AWS</li>
+    <li> Monitoramento e Observabilidade: Prometheus, Grafana, Zabbix</li>
+   <li> Metodologias DevOps e boas práticas de CI/CD</li>
   ---
 
-## **📩 Entre em Contato**  
+## ** Entre em Contato**  
 
 <ul>
   <li><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:thallyson.ferreira@academico.ifpb.edu.br">thallyson.ferreira@academico.ifpb.edu.br</a></li>
