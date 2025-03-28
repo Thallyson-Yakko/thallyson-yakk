@@ -1,10 +1,8 @@
 ---
-title: Sobre
+title: Sobre mim
 icon: fas fa-info-circle
 order: 4
 ---
-
-# Sobre Mim  
 
 Olá, sou **Thallyson Yakko**, profissional de DevOps com 27 anos, atualmente atuando como **Cloud Network Engineer na Orbbi**.  
 
