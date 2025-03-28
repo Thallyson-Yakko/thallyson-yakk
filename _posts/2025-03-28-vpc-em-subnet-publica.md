@@ -5,6 +5,7 @@ date: 2025-03-28
 categories: vpc aws
 tags: aws
 author: Thallyson Yakko
+image: assets/2025-03-28-vpc-em-subnet-publica/aws.jpeg
 ---
 
 O intuito deste post é iniciar falando sobre VPC e desenvolver o projeto em futuras postagens. Primeiramente, criaremos uma instância em uma sub-rede pública para servir como bastion host de acesso a uma instância em uma sub-rede privada. Ao longo dos próximos posts, iremos detalhar mais sobre o projeto.
