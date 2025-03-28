@@ -32,43 +32,53 @@ O intuito deste post é iniciar falando sobre VPC e desenvolver o projeto em fut
 4. Defina o CIDR como **10.100.0.0/16**.
 5. Clique em "Criar VPC".
 
-![VPC Criada](./assets/images/screenshot-vpc.png)
+![VPC Criada](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-03-44.png)
 
 ## Passo 2: Criar Internet Gateway e Associar à VPC
 1. Acesse "Internet Gateway" na AWS Console e crie um novo.
 2. Nomeie como **VPC-A-IGW**.
 3. Após a criação, associe o IGW à VPC **VPC-A**.
 
-![Associar IGW](./assets/images/screenshot-igw.png)
+![Associar IGW](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-04-08.png)
+![Criar IGW](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-04-26.png)
+![Associar IGW](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-04-26.png)
+![Criado IGW](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-04-45.png)
 
 ## Passo 3: Criar a Subnet
 1. Acesse **VPC > Subnets** e crie uma nova subnet com o nome **VPC-A-Public**.
 2. Escolha uma AZ e defina o CIDR **10.100.0.0/24**.
 
-![Sub-rede Criada](./assets/images/screenshot-subnet.png)
+![Sub-rede Criada](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-05-14.png)
+![Sub-rede2 Criada](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-05-35.png)
 
+3. **Colocando IP Public**:
+- Ações > Editar configuração de sub-rede . Configurações de atribuição automática de IP > Habilitar endereço IPV4 Público de atribuição automática > Habilitar
+
+![Sub-rede3 Criada](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-06-01.png)
+  
 ## Passo 4: Criar Tabela de Rotas
 1. Vá para **VPC > Tabelas de rotas** e crie uma nova tabela chamada **VPC-A-Public-RT**.
 2. Adicione a rota **0.0.0.0/0** com o target **IGW**.
 
-![Tabela de Rotas](./assets/images/screenshot-rtb.png)
+![Tabela de Rotas](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-06-31.png)
 
 ## Passo 5: Associar Tabela de Rotas à Subnet
 1. Selecione a tabela **VPC-A-Public-RT**.
 2. Associe a subnet **VPC-A-Public** à tabela de rotas.
 
-![Associar Tabela](./assets/images/screenshot-associar-rtb.png)
+![Associar Tabela](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-06-51.png)
+![Associar Tabela1](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-19-32.png)
 
 ## Passo 6: Criar uma EC2
 1. Ao criar a EC2, escolha a **VPC-A** e a **subnet VPC-A-Public**.
 2. Habilite a opção para atribuir um IP público.
 
-![EC2 Configuração](./assets/images/screenshot-ec2.png)
+![EC2 Configuração](./assets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-19-50.png)
 
 ## Passo 7: Configuração de Segurança
 1. Crie um Grupo de Segurança permitindo SSH (porta 22) para qualquer IP (0.0.0.0/0).
 
-![Grupo de Segurança](./assets/images/screenshot-sg.png)
+![Grupo de Segurança](./aassets/2025-03-28-vpc-em-subnet-publica/Captura de tela de 2025-03-28 17-20-07.png)
 
 ---
 
