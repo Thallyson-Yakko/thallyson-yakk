@@ -3,7 +3,7 @@ layout: post
 title: "VPC em Subnet Pública"
 date: 2025-03-28
 categories: vpc aws
-tags: vpc subnet public
+tags: aws
 author: Thallyson Yakko
 ---
 
