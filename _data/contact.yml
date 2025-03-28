@@ -17,6 +17,11 @@
 - type: linkedin
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
   url:  'https://www.linkedin.com/in/thallysonyakko' 
+
+- type: instagram
+  icon: 'fab fa-instagram'   # icons powered by <https://fontawesome.com/>
+  url: 'https://www.instagram.com/siqueirasmth'  # substitua "seu_usuario" pelo seu nome de usuário no Instagram
+
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
