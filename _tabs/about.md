@@ -29,10 +29,10 @@ Se você está buscando um profissional dedicado e apaixonado por tecnologia, in
    <li> Metodologias DevOps e boas práticas de CI/CD</li>
   ---
 
-## ** Entre em Contato**  
+#**Entre em Contato**  
 
 <ul>
-  <li><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:thallyson.ferreira@academico.ifpb.edu.br">thallyson.ferreira@academico.ifpb.edu.br</a></li>
-  <li><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/thallysonyakko" target="_blank">linkedin.com/in/thallysonyakko</a></li>
-  <li><i class="fab fa-github"></i> <strong>GitHub:</strong> <a href="https://github.com/thallyson-yakko" target="_blank">github.com/thallyson-yakko</a></li>
+  <i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:thallyson.ferreira@academico.ifpb.edu.br">thallyson.ferreira@academico.ifpb.edu.br</a>
+  <i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/thallysonyakko" target="_blank">linkedin.com/in/thallysonyakko</a>
+  <i class="fab fa-github"></i> <strong>GitHub:</strong> <a href="https://github.com/thallyson-yakko" target="_blank">github.com/thallyson-yakko</a>
 </ul>
