@@ -20,12 +20,12 @@ Se você está buscando um profissional dedicado e apaixonado por tecnologia, in
 
 # Habilidades
    <li> Linux (CentOS, Ubuntu, Amazon Linux)</li>
-    <li> Web servers: Nginx e Apache</li>
-    <li> Containerização e Orquestração: Docker e Kubernetes</li>
-    <li> Infraestrutura como Código: Terraform</li>
-    <li> Automação: Bash e Python</li>
-    <li> Cloud Computing: AWS</li>
-    <li> Monitoramento e Observabilidade: Prometheus, Grafana, Zabbix</li>
+   <li> Web servers: Nginx e Apache</li>
+   <li> Containerização e Orquestração: Docker e Kubernetes</li>
+   <li> Infraestrutura como Código: Terraform</li>
+   <li> Automação: Bash e Python</li>
+   <li> Cloud Computing: AWS</li>
+   <li> Monitoramento e Observabilidade: Prometheus, Grafana, Zabbix</li>
    <li> Metodologias DevOps e boas práticas de CI/CD</li>
   ---
 
