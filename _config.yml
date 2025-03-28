@@ -223,3 +223,13 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      open_graph: 
+        title: "{{ page.title }}"
+        description: "{{ page.excerpt }}"
+        image: "{{ page.image }}"
+        url: "{{ page.url }}"
+
