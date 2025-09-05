@@ -63,6 +63,8 @@ Exemplos do código:
 ---
 
 ## Resolução e criação da VPC
+O que é VPC?
+A VPC (Virtual Private Cloud) é como se fosse a sua rede privada dentro da AWS. É nela que você define o espaço de endereçamento (CIDR), cria subnets, controla tabelas de rota e gerencia a comunicação entre os recursos. Em resumo: é a base da infraestrutura em nuvem, onde todo o resto vai rodar.
 
 ### vpc.tf
 
@@ -179,6 +181,10 @@ resource "aws_route_table_association" "priv" {
 ---
 
 ## Criação do módulo Locals
+
+O que são Locals?
+Os locals servem para simplificar a lógica dentro do Terraform. É como se fossem variáveis internas, calculadas ou organizadas para facilitar o uso dentro do próprio código. Em vez de repetir listas e valores, você centraliza em locals e usa em vários pontos. Isso deixa o código mais limpo e fácil de manter.
+
 *locals.tf*
 
 ```
@@ -199,6 +205,10 @@ locals {
 ---
 
 ## Criação das Variables
+
+O que são Variables?
+As variables no Terraform são formas de deixar o código mais flexível e reutilizável. Em vez de “fixar” valores, você cria variáveis para region, CIDR, nomes, tamanhos de bloco e por aí vai. Assim, com o mesmo código, você consegue subir ambientes diferentes só mudando os valores das variáveis.
+
 *variables.tf*
 
 ```
@@ -224,6 +234,10 @@ variable "aws_subnet" {
 ---
 
 ## Criação do Main
+
+O que são Locals?
+Os locals servem para simplificar a lógica dentro do Terraform. É como se fossem variáveis internas, calculadas ou organizadas para facilitar o uso dentro do próprio código. Em vez de repetir listas e valores, você centraliza em locals e usa em vários pontos. Isso deixa o código mais limpo e fácil de manter.
+
 *main.tf*
 
 ```
