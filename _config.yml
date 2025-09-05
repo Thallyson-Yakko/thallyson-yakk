@@ -13,7 +13,7 @@ timezone: America/Sao_Paulo
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
-favicon: /assets/images/favicon/favicon.ico
+#favicon: /assets/images/favicon/favicon.ico
 title: Thallyson Yakko | DevOps Engineer # the main title
 
 tagline: Compartilhando minha jornada rumo às certificações AWS SAA e SysOps, com dicas e estudos práticos sobre DevOps e Cloud Computing.
