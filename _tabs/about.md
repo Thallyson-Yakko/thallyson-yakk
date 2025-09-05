@@ -1,4 +1,5 @@
 ---
+layout: about
 title: Sobre mim
 icon: fas fa-info-circle
 order: 4
