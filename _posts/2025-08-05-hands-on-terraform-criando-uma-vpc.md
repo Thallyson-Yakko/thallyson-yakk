@@ -85,6 +85,7 @@ provider "aws" {
 }
 ```
 
+---
 ## variables.tf
 Variáveis utilizadas para região, CIDR da VPC e tamanho das subnets:
 ```variable "region" {
@@ -102,10 +103,13 @@ variable "aws_subnet" {
   type        = number
   description = "Tamanho do bloco /24"
   default     = 24
-}```
+}
+```
+---
 ## locals.tf
 Lista de nomes das subnets públicas e privadas para criação dinâmica:
-```locals {
+```
+locals {
   subnet_public = [
     "public-1a",
     "public-1c"
@@ -114,10 +118,14 @@ Lista de nomes das subnets públicas e privadas para criação dinâmica:
     "priv-1a",
     "priv-1c"
   ]
-}```
+}
+```
+---
 ## vpc.tf
 Criação da VPC e todos os recursos associados (subnets, gateways, tabelas de rotas, EIPs e NAT Gateways):
-```# Criando VPC
+
+```
+# Criando VPC
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
   tags = { Name = "vpc-project-elven", terraformed = "true" }
@@ -198,7 +206,11 @@ resource "aws_route_table_association" "priv" {
   for_each = aws_subnet.priv
   subnet_id = each.value.id
   route_table_id = aws_route_table.priv[each.key % length(aws_nat_gateway.ngw)].id
-}```
+}
+
+```
+---
+
 ## Conclusão
 Este laboratório faz parte do Programa SRE Advanced da Elven Works.
 O código foi desenvolvido seguindo boas práticas:
