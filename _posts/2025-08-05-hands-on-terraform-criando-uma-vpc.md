@@ -62,7 +62,7 @@ Exemplos do código:
 
 ---
 
-## Resolução e criação do módulo VPC
+## Resolução e criação da VPC
 
 ### vpc.tf
 
@@ -198,7 +198,7 @@ locals {
 
 ---
 
-## Criação do módulo Variables
+## Criação das Variables
 *variables.tf*
 
 ```
@@ -223,7 +223,7 @@ variable "aws_subnet" {
 
 ---
 
-## Criação do módulo Main
+## Criação do Main
 *main.tf*
 
 ```
