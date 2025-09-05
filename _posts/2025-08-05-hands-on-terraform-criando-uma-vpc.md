@@ -235,8 +235,8 @@ variable "aws_subnet" {
 
 ## Criação do Main
 
-O que são Locals?
-Os locals servem para simplificar a lógica dentro do Terraform. É como se fossem variáveis internas, calculadas ou organizadas para facilitar o uso dentro do próprio código. Em vez de repetir listas e valores, você centraliza em locals e usa em vários pontos. Isso deixa o código mais limpo e fácil de manter.
+O que é Main?
+O main.tf é onde você geralmente concentra a definição do provider e o “chamado” dos recursos principais. É como o ponto de entrada do projeto: você diz “vou usar AWS” e define o que precisa. Os outros arquivos (variables, locals, vpc, etc.) complementam, mas o main é quem amarra tudo.
 
 *main.tf*
 
