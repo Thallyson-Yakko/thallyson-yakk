@@ -4,7 +4,7 @@ title: "Hands-On Terraform - Criando uma VPC"
 date: 2025-08-05
 categories: vpc aws terraform
 tags: aws terraform 
-author: Thallyson Yakko
+author: "Thallyson Yakko"
 ---
 
 # Desafio: Provisionando uma VPC com Terraform
