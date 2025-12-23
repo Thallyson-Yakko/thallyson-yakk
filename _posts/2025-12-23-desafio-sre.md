@@ -25,7 +25,6 @@ tags:
 
 # Desafio SRE – Primeira Parte
 
-Este post é a **conversão fiel do PDF** da primeira parte do desafio SRE. **Nenhuma etapa foi removida**. Todo o conteúdo técnico, comandos e códigos foram preservados. O texto foi apenas reorganizado para leitura em blog, mantendo a mesma lógica e decisões do material original.
 
 ---
 
