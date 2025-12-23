@@ -6,20 +6,20 @@ date: 2025-12-23
 author: "Thallyson Yakko"
 categories:
 
-* sre
-* devops
-* kubernetes
-* docker
-* terraform
-* observabilidade
-  tags:
-* sre
-* devops
-* kubernetes
-* docker
-* terraform
-* prometheus
-* grafana
+- sre
+- devops
+- kubernetes
+- docker
+- terraform
+- observabilidade
+tags:
+- sre
+- devops
+- kubernetes
+- docker
+- terraform
+- prometheus
+- grafana
 
 ---
 
