@@ -1,12 +1,27 @@
 ---
-
 layout: post
 title: "Desafio SRE – Primeira Parte"
 date: 2025-12-23
-categories: sre devops kubernetes docker terraform observabilidade
-tags: sre devops kubernetes docker terraform prometheus grafana
 author: "Thallyson Yakko"
--------------------------
+
+categories:
+  - sre
+  - devops
+  - kubernetes
+  - docker
+  - terraform
+  - observabilidade
+
+tags:
+  - sre
+  - devops
+  - kubernetes
+  - docker
+  - terraform
+  - prometheus
+  - grafana
+---
+
 
 # Desafio SRE – Primeira Parte
 
