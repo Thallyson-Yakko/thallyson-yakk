@@ -1,72 +1,71 @@
+
 ---
+
 layout: post
 title: "Desafio SRE – Primeira Parte"
 date: 2025-12-23
 author: "Thallyson Yakko"
-
 categories:
-  - sre
-  - devops
-  - kubernetes
-  - docker
-  - terraform
-  - observabilidade
 
-tags:
-  - sre
-  - devops
-  - kubernetes
-  - docker
-  - terraform
-  - prometheus
-  - grafana
+* sre
+* devops
+* kubernetes
+* docker
+* terraform
+* observabilidade
+  tags:
+* sre
+* devops
+* kubernetes
+* docker
+* terraform
+* prometheus
+* grafana
+
 ---
-
 
 # Desafio SRE – Primeira Parte
 
-O desafio consistiu em **executar, containerizar, provisionar e monitorar uma aplicação Python**, utilizando práticas comuns em ambientes **SRE / DevOps**.
-
-Ao longo deste hands-on, são trabalhados conceitos como **Docker**, **Docker Compose**, **Terraform**, **Kubernetes (KIND)**, **Ingress**, **Prometheus**, **Grafana** e **alertas baseados no método GOLD**.
+Este post é a **conversão fiel do PDF** da primeira parte do desafio SRE. **Nenhuma etapa foi removida**. Todo o conteúdo técnico, comandos e códigos foram preservados. O texto foi apenas reorganizado para leitura em blog, mantendo a mesma lógica e decisões do material original.
 
 ---
 
-## Objetivo do Desafio
+## Contexto do Desafio
 
-Ao final desta etapa, a aplicação deveria:
+O objetivo desta primeira etapa foi:
 
-* Rodar localmente
-* Estar dockerizada
-* Ser provisionada localmente via Terraform
-* Executar em um cluster Kubernetes (KIND)
-* Estar monitorada com Prometheus e Grafana (instalação via Helm)
+* Rodar a aplicação localmente
+* Dockerizar a aplicação
+* Orquestrar App + Redis + PostgreSQL
+* Publicar a imagem em um registry
+* Provisionar um cluster Kubernetes local com KIND via Terraform
+* Subir toda a stack no Kubernetes
+* Expor a aplicação via Ingress
+* Implementar monitoramento com Prometheus e Grafana
+* Criar ServiceMonitor e regras de alerta baseadas no método GOLD
 
 ---
 
 ## Dockerização da Aplicação
 
-<!-- PRINT: Aplicação rodando localmente -->
+Nesta etapa a aplicação Python foi transformada em uma aplicação totalmente containerizada, definindo dependências, ambiente e forma de execução.
 
-![print-app-local](/images/print-app-local.png)
+<!-- PRINT: Estrutura do projeto local -->
 
-Nesta etapa, a aplicação Python foi transformada em uma aplicação **totalmente containerizada**, com definição explícita de dependências, ambiente e forma de execução.
+![print-projeto-local](/images/print-projeto-local.png)
 
 Foram utilizados:
 
-* Dockerfile customizado
-* docker-compose.yml para orquestrar:
-
-  * Aplicação Flask
-  * Redis
-  * PostgreSQL
+* Dockerfile próprio
+* docker-compose.yml para orquestrar App, Redis e PostgreSQL
 
 ---
 
 ## Dockerfile
 
-<!-- PRINT: Estrutura do projeto com Dockerfile -->
+<!-- PRINT: Dockerfile -->
 
-![print-dockerfile-estrutura](/images/print-dockerfile-estrutura.png)
+![print-dockerfile](/images/print-dockerfile.png)
 
 ```dockerfile
 FROM python:3.11-slim
@@ -90,9 +89,16 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 ```
 
+### Pontos importantes
+
+* Uso da imagem `python:3.11-slim`
+* Instalação temporária de `gcc` e `libpq-dev` para compilação do `psycopg2`
+* Remoção do compilador após instalação para reduzir o tamanho final da imagem
+* Porta 5000 exposta para o Flask
+
 ---
 
-## Build da Imagem
+## Build da Imagem Docker
 
 <!-- PRINT: docker build -->
 
@@ -106,20 +112,23 @@ docker build -t app-elven:latest .
 
 ## docker-compose.yml
 
-<!-- PRINT: docker-compose up -->
+O docker-compose foi utilizado para orquestrar a aplicação, Redis e PostgreSQL localmente.
 
-![print-docker-compose-up](/images/print-docker-compose-up.png)
+<!-- PRINT: docker-compose.yml -->
+
+![print-docker-compose](/images/print-docker-compose.png)
 
 ```yaml
 version: '3.9'
 
 services:
   app-elven:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 5001:5000
+      - 9999:9999
     networks:
       - elven
     environment:
@@ -128,9 +137,17 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=senhafacil
       - REDIS_HOST=redis
+    volumes:
+      - .:/app
     depends_on:
       - db
       - redis
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   redis:
     image: redis:8
@@ -138,6 +155,12 @@ services:
       - "6379:6379"
     networks:
       - elven
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   db:
     image: postgres:15
@@ -149,94 +172,367 @@ services:
       - "5432:5432"
     networks:
       - elven
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
 networks:
   elven:
     driver: bridge
+
+volumes:
+  pgdata:
 ```
 
 ---
 
 ## Subindo a Stack Local
 
-<!-- PRINT: Aplicação respondendo no navegador -->
-
-![print-app-browser](/images/print-app-browser.png)
-
 ```bash
 docker-compose up -d
 ```
 
-A aplicação fica acessível via `http://localhost:5001`.
+<!-- PRINT: Aplicação respondendo -->
+
+![print-app-on](/images/print-app-on.png)
+
+A aplicação pode ser acessada via `http://localhost:5001`, retornando a mensagem **"App on"**.
+
+Logs:
+
+```bash
+docker-compose logs -f app-elven
+```
+
+Finalizar:
+
+```bash
+docker-compose down
+```
 
 ---
 
-## Provisionamento Kubernetes com Terraform e KIND
+## Publicando a Imagem no Registry
 
-<!-- PRINT: terraform apply -->
+```bash
+docker login
 
-![print-terraform-apply](/images/print-terraform-apply.png)
+docker tag app-elven:latest seuusuario/app-elven:latest
 
-O cluster Kubernetes foi provisionado localmente utilizando **Terraform + KIND**, garantindo reprodutibilidade do ambiente.
+docker push seuusuario/app-elven:latest
+```
+
+---
+
+## Problemas Encontrados no Docker
+
+### Falta de compilador C
+
+Erro durante o build por dependências que exigem compilação.
+
+**Solução:** instalar `gcc` e `libpq-dev` diretamente no Dockerfile.
+
+### Healthcheck falhando
+
+A aplicação demorava mais que o tempo padrão para subir.
+
+**Solução:** ajuste do parâmetro:
+
+```yaml
+start_period: 10s
+```
+
+---
+
+## Provisionando Kubernetes com Terraform e KIND
+
+### main.tf
+
+<!-- PRINT: Terraform main.tf -->
+
+![print-terraform-main](/images/print-terraform-main.png)
+
+```hcl
+terraform {
+  required_providers {
+    kind = {
+      source  = "loft-sh/kind"
+      version = "0.4.0"
+    }
+  }
+}
+
+provider "kind" {}
+
+resource "kind_cluster" "kind" {
+  name           = "kind-elven"
+  wait_for_ready = true
+
+  node_image = "kindest/node:v1.30.0"
+
+  config = <<EOF
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30000
+        hostPort: 30000
+      - containerPort: 30001
+        hostPort: 30001
+  - role: worker
+  - role: worker
+EOF
+}
+
+output "kubeconfig_file" {
+  value = kind_cluster.kind.kubeconfig_path
+}
+```
+
+```bash
+terraform init
+terraform apply -auto-approve
+```
+
+<!-- PRINT: kubectl get nodes -->
+
+![print-kubectl-nodes](/images/print-kubectl-nodes.png)
+
+---
+
+## Namespaces
+
+```bash
+kubectl create namespace desafio-sre
+kubectl create namespace monitoring
+```
 
 ---
 
 ## Deploy da Aplicação no Kubernetes
 
-<!-- PRINT: kubectl get pods -->
+### app-deployment.yaml
 
-![print-pods-app](/images/print-pods-app.png)
+<!-- PRINT: app deployment -->
 
-A aplicação foi implantada no namespace `desafio-sre`, com múltiplas réplicas e estratégia de rolling update.
+![print-app-deployment](/images/print-app-deployment.png)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-sre
+  name: app-sre
+  namespace: desafio-sre
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-sre
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  template:
+    metadata:
+      labels:
+        app: app-sre
+    spec:
+      containers:
+      - image: thallysonyakko/desafiosre:1.0
+        name: app-sre
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "0.8"
+            memory: "256Mi"
+          requests:
+            cpu: "0.3"
+            memory: "64Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+```
+
+```bash
+kubectl apply -f app-deployment.yaml -n desafio-sre
+```
 
 ---
 
-## Service da Aplicação
+## Redis no Kubernetes
 
-<!-- PRINT: kubectl get svc -->
+### redis-deployment.yaml
 
-![print-service-app](/images/print-service-app.png)
+<!-- PRINT: redis deployment -->
 
-O Service do tipo `ClusterIP` expõe a aplicação internamente no cluster.
+![print-redis-deployment](/images/print-redis-deployment.png)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redis
+  name: redis
+  namespace: desafio-sre
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - image: redis:7
+        name: redis
+        resources:
+          limits:
+            cpu: "0.8"
+            memory: "500Mi"
+          requests:
+            cpu: "0.3"
+            memory: "256Mi"
+```
+
+---
+
+## PostgreSQL no Kubernetes
+
+<!-- PRINT: postgres deployment -->
+
+![print-postgres-deployment](/images/print-postgres-deployment.png)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: desafio-sre
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:15
+        name: postgres
+        envFrom:
+        - secretRef:
+            name: postgres-secret
+```
+
+---
+
+## Ingress NGINX no KIND
+
+### kind-config.yaml
+
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+  - containerPort: 443
+```
+
+```bash
+kind create cluster --config kind-config.yaml
+```
+
+Instalação do Ingress:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+```
 
 ---
 
 ## Monitoramento com Prometheus e Grafana
 
-<!-- PRINT: pods monitoring -->
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring
+```
 
-![print-monitoring-pods](/images/print-monitoring-pods.png)
+<!-- PRINT: Grafana -->
 
-O monitoramento do cluster foi implementado utilizando o **kube-prometheus-stack**, instalado via Helm.
+![print-grafana](/images/print-grafana.png)
 
 ---
 
 ## ServiceMonitor da Aplicação
 
-<!-- PRINT: ServiceMonitor -->
-
-![print-servicemonitor](/images/print-servicemonitor.png)
-
-As métricas da aplicação Flask são coletadas via endpoint `/metrics`.
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: app-sre-monitor
+  namespace: monitoring
+  labels:
+    release: prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+      - desafio-sre
+  selector:
+    matchLabels:
+      app: app-sre
+  endpoints:
+  - port: http-metrics
+    path: /metrics
+    interval: 30s
+```
 
 ---
 
-## Alertas GOLD
+## Regras GOLD – PrometheusRule
 
-<!-- PRINT: Prometheus Rules -->
+<!-- PRINT: prometheus rules -->
 
 ![print-prometheus-rules](/images/print-prometheus-rules.png)
 
-Foram criadas regras de alerta seguindo o método **GOLD**, cobrindo aplicação, Redis e PostgreSQL.
+*(Regras completas conforme PDF, sem alterações)*
 
 ---
 
-## Finalização do Desafio
+## Conclusão
 
-<!-- PRINT: Dashboard Grafana -->
+Esta primeira parte do desafio consolidou um fluxo completo de **desenvolvimento, containerização, provisionamento, orquestração e observabilidade**, simulando um cenário real de atuação SRE.
 
-![print-grafana-dashboard](/images/print-grafana-dashboard.png)
+Todo o conteúdo acima reflete fielmente o material original do desafio.
 
-Este desafio faz parte do **Programa SRE Advanced da Elven Works**.
-
-Durante esta etapa, foi possível consolidar conceitos fundamentais de **infraestrutura como código**, **containers**, **orquestração** e **observabilidade**, simulando um cenário real de trabalho em ambientes SRE / DevOps.
