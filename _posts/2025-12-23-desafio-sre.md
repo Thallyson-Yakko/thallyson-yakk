@@ -1,4 +1,3 @@
-
 ---
 
 layout: post
@@ -535,4 +534,3 @@ spec:
 Esta primeira parte do desafio consolidou um fluxo completo de **desenvolvimento, containerização, provisionamento, orquestração e observabilidade**, simulando um cenário real de atuação SRE.
 
 Todo o conteúdo acima reflete fielmente o material original do desafio.
-
