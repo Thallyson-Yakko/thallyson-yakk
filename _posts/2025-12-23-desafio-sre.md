@@ -22,10 +22,7 @@ tags:
 - grafana
 
 ---
-{% raw %}
-{{ $value | printf "%.2f%%" }}
-{{ $labels.instance }}
-{% endraw %}
+
 
 # Desafio SRE – Primeira Parte
 
@@ -901,7 +898,7 @@ kubectl apply -f app-sre-monitor.yaml
 
 Arquivo: `prometheus-gold-rules.yaml`
 
-```yaml
+```bash
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
