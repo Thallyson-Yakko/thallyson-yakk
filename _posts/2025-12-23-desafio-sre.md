@@ -212,7 +212,7 @@ docker-compose up -d
 
 Pode ser realizado pelo navegado por localhost ou por um curl no localhost, resutado esperado é ver uma mensagem "App on".
 
-![[Captura de Tela 2025-09-30 às 17.22.59.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.17.08.png
 
 ### Para ver os Logs e derrubar a infra:
 
