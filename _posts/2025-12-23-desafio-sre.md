@@ -898,6 +898,7 @@ kubectl apply -f app-sre-monitor.yaml
 
 Arquivo: `prometheus-gold-rules.yaml`
 
+{% raw %}
 ```bash
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -1021,6 +1022,7 @@ spec:
           summary: "PostgreSQL: Excesso de Conexões"
           description: "O banco de dados 'mydatabase' tem mais de 100 conexões ativas. Valor: {{ $value }}. Revise o pool de conexões da aplicação."
 ```
+{% endraw %}
 
 ### Aplicando:
 
