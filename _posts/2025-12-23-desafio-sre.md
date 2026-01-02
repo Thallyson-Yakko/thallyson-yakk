@@ -22,6 +22,10 @@ tags:
 - grafana
 
 ---
+{% raw %}
+{{ $value | printf "%.2f%%" }}
+{{ $labels.instance }}
+{% endraw %}
 
 # Desafio SRE – Primeira Parte
 
