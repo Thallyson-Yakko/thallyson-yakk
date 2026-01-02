@@ -20,7 +20,7 @@ tags:
 - terraform
 - prometheus
 - grafana
-image: assets/2025-03-28-vpc-em-subnet-publica/aws.jpeg
+image: assets/2025-12-24-desafio-sre/kubetux.png
 ---
 
 
