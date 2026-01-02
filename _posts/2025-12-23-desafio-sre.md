@@ -831,7 +831,6 @@ helm install prometheus-stack prometheus-community/kube-prometheus-stack -n moni
 3. Verificando:
 ```bash
 kubectl get pods -n monitoring
-
 ```
 
 ![[Captura de Tela 2025-12-09 às 12.41.49.png]]
