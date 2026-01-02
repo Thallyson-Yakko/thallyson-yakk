@@ -673,7 +673,7 @@ kubectl apply -f ./POSTGRES -n desafio-sre
 kubectl get pods -A
 ```
 
-![[Pasted image 20251209122653.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.17.38.png
 
 
 ---
@@ -799,13 +799,13 @@ kubectl get ingress
 ```
 
 
-![[Pasted image 20251209123248.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.18.03.png
 
 # Teste Ingress:
 
-1. Via Navegador:![[Captura de Tela 2025-12-09 às 12.37.26.png]]
+1. Via Navegador:                                                                     ./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.19.06.png
 2.  Via cli:
-![[Captura de Tela 2025-12-09 às 12.38.27.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.19.44.png
 
 
 ---
@@ -832,19 +832,17 @@ helm install prometheus-stack prometheus-community/kube-prometheus-stack -n moni
 ```bash
 kubectl get pods -n monitoring
 ```
-
-![[Captura de Tela 2025-12-09 às 12.41.49.png]]
-
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.20.01.png
 
 # Acessando o Grafana via Ingress:
 
 1. Navegador:
-![[Captura de Tela 2025-12-08 às 16.55.39.png]]`url: grafana.elven.works`
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.20.22.png`url: grafana.elven.works`
 
 2. Dashboards
 
 
-![[Captura de Tela 2025-12-09 às 12.43.37.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 11.20.36.png
 
 3. Métricas do cluster:
 
@@ -857,7 +855,7 @@ kubectl get secret prometheus-stack-grafana -n monitoring -o jsonpath='{.data.ad
 
 6. Prometheus acesso via ingress:
 
-![[Captura de Tela 2025-12-09 às 12.48.08.png]]
+./assets/2025-12-24-desafio-sre/Captura de Tela 2026-01-02 às 12.25.44.png
 `url:prometheus.elven.works`
 
 
