@@ -806,8 +806,12 @@ kubectl get ingress
 
 # Teste Ingress:
 
-1. Via Navegador:                                                                               ![Navegador](./assets/2025-12-24-desafio-sre/4.png)
-2.  Via cli:
+1. Via Navegador:
+
+   ![Navegador](./assets/2025-12-24-desafio-sre/4.png)
+
+3.  Via cli:
+
 ![NCLI](./assets/2025-12-24-desafio-sre/5.png)
 
 
