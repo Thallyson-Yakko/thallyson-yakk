@@ -9,10 +9,7 @@ author: "Thallyson Yakko"
 
 # Desafio: Provisionando uma VPC com Terraform
 
-O desafio consistia em **provisionar uma VPC utilizando Terraform**.  
-Dessa forma, são trabalhados conceitos de rede como **Subnets (públicas e privadas)**, **Internet Gateway**, **NAT Gateway**, **Tabelas de Rotas** e **Endereços IP**.  
-
-Ao final do desafio, você será capaz de desenvolver um projeto básico de VPC com seus principais componentes.
+Esse desafio foi criar uma VPC completa usando Terraform, sem tocar no console da AWS. Trabalhei com subnets públicas e privadas, Internet Gateway, NAT Gateway e tabelas de rota, tudo via código.
 
 ---
 
@@ -28,12 +25,9 @@ Criar uma rede básica na AWS com os seguintes recursos:
 
 ---
 
-## Por que utilizar o Terraform?
+## Por que Terraform?
 
-Diferente de ferramentas nativas como o **CloudFormation (AWS)**, o Terraform funciona em múltiplos providers.  
-Ele elimina a necessidade de criar recursos manualmente no console e permite que **um mesmo código crie múltiplos ambientes idênticos** (dica: Terraform Workspaces).  
-
-Além disso, garante **previsibilidade**, mantendo um *state* do que foi criado, o que permite auditoria e rastreabilidade dos recursos.
+Já usei CloudFormation antes, mas o Terraform tem uma vantagem clara: funciona em qualquer provider. Com ele dá pra subir o mesmo ambiente várias vezes sem variação, e o state garante que você sempre sabe o que está rodando. Terraform Workspaces então facilitam muito quando precisa isolar ambientes do mesmo projeto.
 
 ---
 
@@ -43,9 +37,7 @@ Para deixar o código mais **dinâmico e reutilizável**, utilizei **Built-in Fu
 
 ### O que são Built-in Functions?
 
-São funções já prontas do Terraform, que permitem manipular dados, strings, listas, mapas, números, entre outros.
-
-Exemplos utilizados neste código:
+O Terraform tem funções nativas que evitam repetição de lógica. As que usei aqui:
 
 - `cidrsubnet()` → calcula automaticamente o CIDR das subnets  
 - `lower()` → transforma strings em minúsculas  
@@ -53,9 +45,7 @@ Exemplos utilizados neste código:
 
 ### O que são Meta-Arguments?
 
-São argumentos que controlam o **comportamento dos recursos**, evitando repetição de código e permitindo criar múltiplos recursos dinamicamente.
-
-Exemplos do código:
+Meta-arguments controlam como os recursos se comportam. Os principais que usei:
 
 - `for_each` → cria múltiplos recursos a partir de listas ou mapas  
 - `depends_on` → garante a ordem correta de criação de recursos
@@ -63,8 +53,7 @@ Exemplos do código:
 ---
 
 ## Resolução e criação da VPC
-O que é VPC?
-A VPC (Virtual Private Cloud) é como se fosse a sua rede privada dentro da AWS. É nela que você define o espaço de endereçamento (CIDR), cria subnets, controla tabelas de rota e gerencia a comunicação entre os recursos. Em resumo: é a base da infraestrutura em nuvem, onde todo o resto vai rodar.
+A VPC é sua rede privada dentro da AWS. É nela que fica o CIDR, as subnets, as tabelas de rota. Basicamente a base de tudo.
 
 ### vpc.tf
 
@@ -182,8 +171,7 @@ resource "aws_route_table_association" "priv" {
 
 ## Criação do módulo Locals
 
-O que são Locals?
-Os locals servem para simplificar a lógica dentro do Terraform. É como se fossem variáveis internas, calculadas ou organizadas para facilitar o uso dentro do próprio código. Em vez de repetir listas e valores, você centraliza em locals e usa em vários pontos. Isso deixa o código mais limpo e fácil de manter.
+Locals são variáveis internas do Terraform. Em vez de repetir as mesmas listas em vários recursos, centralizo tudo num lugar só.
 
 *locals.tf*
 
@@ -206,8 +194,7 @@ locals {
 
 ## Criação das Variables
 
-O que são Variables?
-As variables no Terraform são formas de deixar o código mais flexível e reutilizável. Em vez de “fixar” valores, você cria variáveis para region, CIDR, nomes, tamanhos de bloco e por aí vai. Assim, com o mesmo código, você consegue subir ambientes diferentes só mudando os valores das variáveis.
+Variables evitam que você fixe valores no código. Com elas dá pra subir ambientes diferentes sem mudar nada no Terraform, só passando os valores via `.tfvars` ou linha de comando.
 
 *variables.tf*
 
@@ -235,8 +222,7 @@ variable "aws_subnet" {
 
 ## Criação do Main
 
-O que é Main?
-O main.tf é onde você geralmente concentra a definição do provider e o “chamado” dos recursos principais. É como o ponto de entrada do projeto: você diz “vou usar AWS” e define o que precisa. Os outros arquivos (variables, locals, vpc, etc.) complementam, mas o main é quem amarra tudo.
+O main.tf é o ponto de entrada: aqui fica a definição do provider e a versão do Terraform. Os outros arquivos complementam, mas é o main que amarra tudo.
 
 *main.tf*
 
@@ -259,8 +245,7 @@ provider "aws" {
 
 ## Finalização do Desafio
 
-Este desafio faz parte do **Programa SRE Advanced da Elven Works**.  
-O código foi desenvolvido seguindo **boas práticas do Terraform**, garantindo **modularidade, reusabilidade e previsibilidade**.
+Esse desafio faz parte do **Programa SRE Advanced da Elvenworks**.
 
 - Repositório oficial da Elven: [Minha Primeira VPC com Terraform](https://github.com/Formacao-SRE/minha-primeira-vpc-com-terraform)  
 - Meu repositório com o código deste desafio: [Terraform VPC no GitLab](https://gitlab.com/desafio-elven-programadeformacao/terraform-vpc)

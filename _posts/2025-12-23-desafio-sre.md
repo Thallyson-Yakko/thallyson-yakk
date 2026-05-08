@@ -23,15 +23,9 @@ tags:
 image: assets/2025-12-24-desafio-sre/kubetux.png
 ---
 
-
-# Desafio SRE – Primeira Parte
-
-
----
-
 ## Contexto do Desafio
 
-O objetivo desta primeira etapa foi:
+O objetivo dessa primeira etapa foi:
 
 * Rodar a aplicação localmente
 * Dockerizar a aplicação
@@ -45,11 +39,9 @@ O objetivo desta primeira etapa foi:
 
 ---
 
-## **Dockerização da Aplicação**
+## Dockerização da Aplicação
 
-Nesta etapa você transformou a aplicação Python em uma aplicação totalmente containerizada, definindo todas as dependências, ambiente e forma de execução.
-
-Você utilizou um **Dockerfile próprio** e um **docker-compose.yml** para orquestrar o app + Redis + Postgres.
+Primeira coisa foi containerizar a aplicação Python. Criei um Dockerfile e um docker-compose.yml para subir o app junto com Redis e Postgres.
 
 ```yaml
 FROM python:3.11-slim
@@ -74,33 +66,24 @@ CMD ["python", "app.py"]
 
 ```
 
+A imagem base é `python:3.11-slim` pra manter o tamanho controlado. Precisei instalar `gcc` e `libpq-dev` porque o `psycopg2` tem extensão C e sem eles o build quebra. No final removo o gcc pra não carregar lixo na imagem final.
 
-|Etapa|Descrição|
-|---|---|
-|`FROM python:3.11-slim`|Imagem base leve, ideal para produção.|
-|`WORKDIR /app`|Define o diretório onde o código ficará dentro do container.|
-|Instalação de dependências|GCC e libpq-dev necessários para compilar bibliotecas Python como `psycopg2`.|
-|Instalando libs|Flask, Redis, Prometheus exporter, Postgres driver.|
-|Limpeza|Remove GCC para reduzir tamanho final da imagem.|
-|`COPY . .`|Copia seu código-fonte para dentro do container.|
-|`EXPOSE 5000`|Porta onde sua aplicação Flask vai rodar.|
-|`CMD ["python", "app.py"]`|Comando final: inicia o servidor Flask.|
+### Build da imagem Docker
 
-### **Build da imagem Docker**
-
-Execute no diretório onde está o `Dockerfile`:
+Execute no diretório onde está o `Dockerfile`:
 
 ```bash
 docker build -t app-elven:latest .
 ```
-# docker-compose.yml – Explicação Completa
+
+# docker-compose.yml
 
 ```yaml
 version: '3.9'
 
 services:
   app-elven:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     ports:
@@ -167,55 +150,17 @@ volumes:
 
 ```
 
-
-
-### Aplicação Python
-
-- Conectada ao Postgres e Redis via variáveis de ambiente
-    
-- Porta 5001 → redireciona para o 5000 interno
-    
-- Healthcheck ativo
-    
-- Volume montado para desenvolvimento hot-reload
-    
-
-# Redis
-
-- Imagem oficial Redis 8
-    
-- Porta 6379 exposta
-    
-- Healthcheck respondendo ao `PING`
-    
-
-# Postgres
-
-- Persistência com volume `pgdata`
-    
-- Healthcheck com `pg_isready`
-    
-
-# Rede interna
-
-- `elven` (bridge) unindo os 3 serviços
-
-
-
 ## Subindo toda a stack
 
 ```bash
 docker-compose up -d
 ```
 
-
-# Acesso:
-
-Pode ser realizado pelo navegado por localhost ou por um curl no localhost, resutado esperado é ver uma mensagem "App on".
-
+Acesso pelo navegador no localhost ou por curl. Resultado esperado é ver uma mensagem "App on".
 
 ![Acesso](./assets/2025-12-24-desafio-sre/1.png)
-### Para ver os Logs e derrubar a infra:
+
+### Para ver os logs e derrubar a infra:
 
 ```bash
 docker-compose logs -f app-elven
@@ -245,8 +190,6 @@ docker push seuusuario/app-elven:latest
 ```
 
 
-
-
 # Problemas:
 
 1. **Problemas com build por falta do compilator de extensão C:
@@ -259,8 +202,9 @@ docker push seuusuario/app-elven:latest
 
 ---
 
-# Criando o main.tf para criação do kind localmente.
+# Criando o cluster KIND com Terraform
 
+Usei o provider `loft-sh/kind` pra provisionar o cluster via Terraform em vez de rodar `kind create cluster` na mão.
 
 ```yaml
 terraform {
@@ -330,26 +274,19 @@ kubectl get nodes -A
 
 ---
 
-# Kubernetes utilizando o KIND localmente.
+# Kubernetes com KIND
 
-A aplicação foi provisionada localmente em um cluster **KIND** contendo:
+A stack rodou inteira dentro do namespace **desafio-sre**:
 
 - App Flask
-    
 - Redis
-    
 - Postgres
-    
 - Ingress NGINX
-    
 - Prometheus + Grafana via Helm (kube-prometheus-stack)
-    
 - Regras personalizadas
-    
 - Monitoramento via ServiceMonitor
-    
 
-Toda a stack rodou dentro do namespace **desafio-sre** e o monitoramento no namespace **monitoring**.
+O monitoramento ficou no namespace **monitoring**.
 
 # Criação Namespace:
 
@@ -357,9 +294,9 @@ Toda a stack rodou dentro do namespace **desafio-sre** e o monitoramento no na
 kubectl create namespace desafio-sre
 ```
 
-# **Aplicação – Deployment**
+# Aplicação – Deployment
 
-Arquivo: `app-deployment.yaml`
+Arquivo: `app-deployment.yaml`
 
 ```yaml
 apiVersion: apps/v1    #Sempre vai ser apps/v1
@@ -422,17 +359,6 @@ spec:             #caracteristicas do deployment
 
 ```
 
-Principais pontos:
-
-- 3 réplicas da aplicação
-    
-- Variáveis de ambiente para Postgres e Redis
-    
-- Porta 5000 exposta
-    
-- Readiness/Liveness probes podem ser adicionados posteriormente
-    
-
 Comando aplicado:
 
 ```bash
@@ -442,8 +368,7 @@ kubectl apply -f app-deployment.yaml -n desafio-sre
 
 # Aplicação - Service
 
-
-Arquivo: `app-service.yaml`
+Arquivo: `app-service.yaml`
 
 ```yaml
 apiVersion: v1
@@ -464,18 +389,15 @@ spec:
   type: ClusterIP
 ```
 
-Service ClusterIP:
-
 ```bash
-kubectl apply -f app-service.yaml -n desafio-sre 
+kubectl apply -f app-service.yaml -n desafio-sre
 ```
 
 
 ---
 # Redis - Deploy, Service e Secret:
 
-
-Arquivo: `redis-deployment.yaml`
+Arquivo: `redis-deployment.yaml`
 
 
 ```yaml
@@ -511,11 +433,11 @@ spec:             #caracteristicas do deployment
             requests:
               cpu: "0.3"
               memory: "256Mi"
-        
+
 ```
 
 
-Arquivo: `redis-secret.yaml`
+Arquivo: `redis-secret.yaml`
 
 ```yaml
 apiVersion: v1
@@ -526,10 +448,10 @@ metadata:
 type: Opaque
 data:
   redis-password: ZGVzYWZpb2VsdmVu       # "desafioelven"
-  
+
 ```
 
-Arquivo: `redis-service.yaml`
+Arquivo: `redis-service.yaml`
 
 ```yaml
 apiVersion: v1
@@ -551,34 +473,31 @@ spec:
 
 ```
 
-## Aplicando:
-
 ```bash
 kubectl apply -f ./REDIS -n desafio-sre
 ```
 
 # Problemas enfrentados:
 
-###  YAML com erro de indentação
+### YAML com erro de indentação
 
 `yaml: line 25: mapping values are not allowed in this context`
 
-➜ Ajustado o `redis-deployment.yaml`.
+Ajustei o `redis-deployment.yaml`.
 
 ---
- Service sem nome (“resource name may not be empty”)
+
+Service sem nome ("resource name may not be empty")
 
 Corrigido para:
 
 `metadata:   name: redis-service`
 
 
-
-
 ---
-# Postgress
+# Postgres
 
-Arquivo: `postgres-deployment.yaml`
+Arquivo: `postgres-deployment.yaml`
 
 ```yaml
 apiVersion: apps/v1    #Sempre vai ser apps/v1
@@ -616,11 +535,11 @@ spec:             #caracteristicas do deployment
             requests:
               cpu: "0.3"
               memory: "256Mi"
-        
+
 ```
 
 
-Arquivo: `postgres-secret.yaml`
+Arquivo: `postgres-secret.yaml`
 
 ```yaml
 apiVersion: v1
@@ -635,10 +554,10 @@ data:
   POSTGRES_PASSWORD: MTIzNDU2        # 123456
   POSTGRES_HOST: cG9zdGdyZXMtc2VydmljZQ==   # postgres-service
   POSTGRES_PORT: NTQzMg==            # 5432
-  
+
 ```
 
-Arquivo: `postgres-service.yaml`
+Arquivo: `postgres-service.yaml`
 
 ```yaml
 
@@ -661,14 +580,12 @@ spec:
 
 ```
 
-## Aplicando:
-
 ```bash
 kubectl apply -f ./POSTGRES -n desafio-sre
 ```
 
 
-# **Conferência dos Pods**
+# Conferência dos Pods
 
 ```bash
 kubectl get pods -A
@@ -680,9 +597,9 @@ kubectl get pods -A
 
 ---
 
-# Configurações do ingress no cluster
+# Configurando o Ingress no cluster
 
-1. Crie um arquivo chamado `kind-config.yaml` com o conteúdo abaixo:
+1. Crie um arquivo chamado `kind-config.yaml` com o conteúdo abaixo:
 
 ```yaml
 kind: Cluster
@@ -712,8 +629,6 @@ kind create cluster --config kind-config.yaml
 
 # Instalando o Ingress Nginx Controller
 
-- Super importante fazer a instalação através do HELM.
-
 1. Instalação:
 
 ```bash
@@ -721,8 +636,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/mast
 
 ```
 
-2.  Comando de condição: 
- Pods condition ready
+2. Aguarda os pods ficarem prontos:
+
 ```bash
 kubectl wait --namespace ingress-nginx \
 --for=condition=ready pod \
@@ -731,9 +646,7 @@ kubectl wait --namespace ingress-nginx \
 ```
 
 
-# Criando a primeira regra:
-
-- Precisa criar um yaml para o ingress:
+# Criando a primeira regra de Ingress:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -741,19 +654,19 @@ kind: Ingress
 metadata:
   name: desafio-sre-ingress
   namespace: desafio-sre
-  annotations:    
-    nginx.ingress.kubernetes.io/rewrite-target: /        #Rewrite= Rescreva, idenpendente do que for passado ele vai redirecionar para o /   
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /        #Rewrite= Rescreva, idenpendente do que for passado ele vai redirecionar para o /
 spec:
   rules:
   - host: app.elven.works							#Criando um dns na minha maquina, preciso modificar no /etc/hosts para passar esse "dominio" par o meu local hostt
-    http: 
+    http:
       paths:
       - path: /
         pathType: Prefix
-        backend: 
+        backend:
           service:
             name: app-sre
-            port: 
+            port:
               number: 5000
 ---
 #---------
@@ -789,14 +702,11 @@ spec:
 ```
 
 
--  Aplicando:
-
-```BASH
+```bash
 kubectl apply -f ingress.yaml
 ```
- - Verificando o Ingress:
 
-```BASH
+```bash
 kubectl get ingress
 ```
 
@@ -804,13 +714,13 @@ kubectl get ingress
 
 ![Ingress](./assets/2025-12-24-desafio-sre/3.png)
 
-# Teste Ingress:
+# Teste do Ingress:
 
 1. Via Navegador:
 
    ![Navegador](./assets/2025-12-24-desafio-sre/4.png)
 
-3.  Via cli:
+3.  Via CLI:
 
 ![NCLI](./assets/2025-12-24-desafio-sre/5.png)
 
@@ -867,9 +777,9 @@ kubectl get secret prometheus-stack-grafana -n monitoring -o jsonpath='{.data.ad
 `url:prometheus.elven.works`
 
 
-# Criando ServiceMonitor da aplicação:
+# Criando o ServiceMonitor da aplicação:
 
-Arquivo: `app-sre-monitor.yaml`
+Arquivo: `app-sre-monitor.yaml`
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -885,7 +795,7 @@ spec:
       - desafio-sre # O namespace onde sua aplicação está
   selector:
     matchLabels:
-      app: app-sre # Use o rótulo do seu Service (verifique o Service 'app-sre' para o rótulo correto)     
+      app: app-sre # Use o rótulo do seu Service (verifique o Service 'app-sre' para o rótulo correto)
   endpoints:
   - port: http-metrics # Nome da porta (deve ser definido no seu Service, veja nota abaixo)
     path: /metrics       # O caminho onde as métricas estão (ex: /metrics ou /actuator/prometheus)
@@ -893,17 +803,16 @@ spec:
 ```
 
 
-### Aplicando:
-
 ```bash
 kubectl apply -f app-sre-monitor.yaml
 
 ```
 
 
-# Criando o Prometheusrules:
 
-Arquivo: `prometheus-gold-rules.yaml`
+# Criando o PrometheusRule:
+
+Arquivo: `prometheus-gold-rules.yaml`
 
 {% raw %}
 ```bash
@@ -918,13 +827,13 @@ metadata:
     app.kubernetes.io/name: application-gold
 spec:
   groups:
-    
+
     # ----------------------------------------------------
     # GRUPO 1: REGRAS GOLD PARA APLICAÇÃO FLASK (flask-app)
     # ----------------------------------------------------
     - name: flask.gold.alerts
       rules:
-      
+
       # [G/D] - Get/Duration: Alta Taxa de Erros (5xx)
       - alert: FlaskHighErrorRate
         expr: |
@@ -972,7 +881,7 @@ spec:
     # ----------------------------------------------------
     - name: redis.gold.alerts
       rules:
-      
+
       # [G] - Get: Verificação de Saúde (up)
       - alert: RedisDown
         expr: up{job="redis"} == 0
@@ -992,7 +901,7 @@ spec:
         annotations:
           summary: "Redis: Memória Utilizada Excedeu 85%"
           description: "O Redis está próximo de atingir o limite de memória. Valor atual: {{ $value | humanizePercentage }}"
-          
+
     # ----------------------------------------------------
     # GRUPO 3: REGRAS GOLD PARA POSTGRESQL (postgres-exporter)
     # ----------------------------------------------------
@@ -1018,7 +927,7 @@ spec:
         annotations:
           summary: "PostgreSQL: Deadlocks Detectados"
           description: "Foram detectados deadlocks no banco de dados nas últimas 5 minutos. Isso requer atenção imediata."
-          
+
       # [L] - Load: Muitas Conexões Ativas (Pode causar esgotamento de recursos)
       - alert: PostgresTooManyConnections
         expr: pg_stat_activity_count{datname="mydatabase"} > 100 # Exemplo: mais de 100 conexões ativas
@@ -1031,21 +940,16 @@ spec:
 ```
 {% endraw %}
 
-### Aplicando:
-
 ```bash
 kubectl apply -f prometheus-gold-rules.yaml -n monitoring
 
 ```
 
 
-### Conferencia:
-
 ```bash
 kubectl get prometheusrules -n monitoring
 
 ```
-
 
 
 
@@ -1060,4 +964,4 @@ kubectl get prometheusrules -n monitoring
 	- Provisionar a app usando o terraform local na maquina
 	- Usar kind para provisionar a mesma
 	- Monitorar o cluster local com prometheus + grafana (instalação via helm)
-	
+
