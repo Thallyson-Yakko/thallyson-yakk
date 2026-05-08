@@ -5,37 +5,44 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-Olá, sou **Thallyson Yakko**, profissional de DevOps com 27 anos, atualmente atuando como **Cloud Network Engineer na Orbbi**.  
+Olá, sou **Thallyson Yakko**, tenho 29 anos e hoje trabalho como **Platform Engineer na Elvenworks**, onde o foco é facilitar a vida dos times de desenvolvimento enquanto cuido das plataformas que entregamos para clientes como ContaAzul, B3 e Bradesco.
 
-Minha trajetória na tecnologia começou quando subi meu primeiro servidor hospedando um WordPress com XAMPP, e desde então venho me especializando em criar soluções robustas e eficientes para ambientes de alta disponibilidade e missão crítica.  
+Comecei na tecnologia da forma mais clássica possível: subindo um WordPress com XAMPP e achando que entendia de servidor. Desde então fui passando por diferentes áreas e cargos, saindo de Analista de Redes, passando por Cloud Network Engineer e DevOps, até chegar onde estou hoje. Cada etapa deixou alguma coisa, e a soma disso é o que me faz entender os problemas de um jeito diferente.
 
-Tenho paixão por compartilhar conhecimento, inspirada pelas pessoas que me ajudaram ao longo da minha carreira. Por isso, criei meu blog para disseminar conteúdos práticos sobre **Linux, Terraform, Docker, Kubernetes, AWS, Bash e DevOps**, com o objetivo de apoiar outros profissionais na jornada de desenvolvimento técnico.  
+Ao longo do caminho trabalhei como consultor na RPE Crédito Varejista, Orbbi e Elvenworks, com experiência em ambientes pesados como hospitais, Secretaria de Saúde do Estado da Paraíba e fintechs de pagamento. São os tipos de ambiente que ensinam o que "alta disponibilidade" realmente significa quando a coisa quebra às 3 da manhã.
 
-Atualmente, sou **monitor de Redes de Computadores no Instituto Federal de Tecnologia da Paraíba (IFPB)**, onde continuo a me atualizar com as melhores práticas de redes, além de reforçar minha formação acadêmica em **Redes de Computadores com ênfase em equipamentos Cisco**.  
+Minha formação em Redes de Computadores no IFPB foi uma parte importante de quem sou tecnicamente. Trabalhar com equipamentos **Cisco** e soluções **Fortinet/Fortigate** me deu uma base de redes que ainda uso todo dia, e honestamente, a curiosidade sobre como as redes funcionam de verdade nunca foi embora.
 
-Possuo certificações como **AWS Re/Start e AWS Cloud Practitioner**, além de estar me preparando para avançar para a certificação **AWS Solutions Architect Associate**. Tenho experiência significativa em **ambientes críticos**, como **hospitais e a Secretaria de Saúde do Estado da Paraíba**, onde atuei com infraestrutura 24/7. Atualmente, aplico essas habilidades em uma **fintech de métodos de pagamento**, contribuindo com a **infraestrutura de cloud e redes**.  
+No dia a dia atual vivo entre Kubernetes no GCP, GitOps com ArgoCD, observabilidade com OpenTelemetry e tudo que o ecossistema open source tem de melhor. Nas pausas, **Python e Django** viraram minha linguagem favorita pela simplicidade que entrega resultado de forma direta e sem cerimônia.
 
-Estou em busca de novas oportunidades na área de **Cloud/DevOps**, onde possa aplicar minhas habilidades em **automação, infraestrutura como código (IaC), CI/CD e infraestrutura de nuvem** para resolver desafios técnicos complexos.  
-
-Se você procura um profissional dedicado e apaixonado por tecnologia, inovação e soluções escaláveis, estou à disposição para conversarmos sobre novas oportunidades. Vamos inovar e crescer juntos!  
+Criei esse blog para compartilhar o que aprendo no caminho. Nada de conteúdo genérico: são coisas que realmente passei, erros que cometi e soluções que funcionaram. Se você está nessa mesma jornada, espero que encontre algo útil por aqui.
 
 ---
 
 ## Habilidades
 
-- Linux (CentOS, Ubuntu, Amazon Linux)  
-- Web servers: Nginx e Apache  
-- Containerização e Orquestração: Docker e Kubernetes  
-- Infraestrutura como Código: Terraform  
-- Automação: Bash e Python  
-- Cloud Computing: AWS  
-- Monitoramento e Observabilidade: Prometheus, Grafana, Zabbix  
-- Metodologias DevOps e boas práticas de CI/CD  
+- **Platform Engineering:** Kubernetes, GCP, ArgoCD, Helm
+- **Observabilidade:** OpenTelemetry, Prometheus, Grafana, Zabbix
+- **Infraestrutura como Código:** Terraform
+- **Containers:** Docker, Kubernetes
+- **Cloud:** GCP, AWS
+- **Automação:** Python, Django, Bash
+- **Redes e Segurança:** Cisco, Fortinet/Fortigate, Nginx
+- **CI/CD:** GitHub Actions, GitLab CI
+- **Linux:** CentOS, Ubuntu, Amazon Linux
+
+---
+
+## Certificações
+
+- AWS Cloud Practitioner
+- AWS Re/Start
+- *Em progresso: AWS Solutions Architect Associate*
 
 ---
 
 ## Entre em Contato
 
-- **Email:** [thallyson.ferreira@academico.ifpb.edu.br](mailto:thallyson.ferreira@academico.ifpb.edu.br)  
-- **LinkedIn:** [linkedin.com/in/thallysonyakko](https://linkedin.com/in/thallysonyakko)  
+- **LinkedIn:** [linkedin.com/in/thallysonyakko](https://linkedin.com/in/thallysonyakko)
 - **GitHub:** [github.com/thallyson-yakko](https://github.com/thallyson-yakko)
+- **Instagram:** [instagram.com/siqueirasmth](https://instagram.com/siqueirasmth)

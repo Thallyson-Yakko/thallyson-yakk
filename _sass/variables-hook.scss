@@ -1,0 +1,489 @@
+// ============================================================
+// Custom Theme Override — Thallyson Yakko Blog
+// Estilo inspirado em ntakashi.com/blog/
+// Fontes: Heebo (corpo) + Signika (títulos)
+// ============================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Signika+Negative:wght@500;600;700&display=swap');
+
+// ──────────────────────────────────────────────
+// LIGHT MODE
+// ──────────────────────────────────────────────
+:root,
+[data-mode='light'] {
+  // Backgrounds
+  --main-bg:          #ffffff;
+  --sidebar-bg:       #f8f9fa;
+  --topbar-bg:        rgba(255, 255, 255, 0.92);
+
+  // Texto
+  --text-color:       #374151;
+  --text-muted-color: #6b7280;
+  --heading-color:    #111827;
+  --link-color:       #2563eb;
+  --link-underline-color: rgba(37, 99, 235, 0.25);
+
+  // Bordas e divisores
+  --border-color:     #e5e7eb;
+  --main-border-color: #e5e7eb;
+
+  // Card / Post preview
+  --card-bg:          #ffffff;
+  --card-border-color: #e5e7eb;
+  --card-shadow:      0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  // Tags e badges
+  --tag-bg:           #f3f4f6;
+  --tag-border:       #e5e7eb;
+  --tag-color:        #6b7280;
+  --tag-hover-bg:     #2563eb;
+  --tag-hover-color:  #ffffff;
+
+  // Sidebar
+  --sidebar-muted-color:  #9ca3af;
+  --nav-cursor-color:     #2563eb;
+  --sidebar-btn-bg:       #f3f4f6;
+
+  // Code blocks
+  --code-bg:          #f9fafb;
+  --code-color:       #1f2937;
+  --code-header-bg:   #f3f4f6;
+  --highlight-bg-color: #f9fafb;
+
+  // Misc
+  --btn-active-color: #2563eb;
+  --checkbox-color:   #2563eb;
+  --toc-highlight:    #2563eb;
+}
+
+// ──────────────────────────────────────────────
+// DARK MODE
+// ──────────────────────────────────────────────
+[data-mode='dark'] {
+  // Backgrounds
+  --main-bg:          #0d1117;
+  --sidebar-bg:       #161b22;
+  --topbar-bg:        rgba(13, 17, 23, 0.92);
+
+  // Texto
+  --text-color:       #c9d1d9;
+  --text-muted-color: #8b949e;
+  --heading-color:    #e6edf3;
+  --link-color:       #58a6ff;
+  --link-underline-color: rgba(88, 166, 255, 0.25);
+
+  // Bordas
+  --border-color:     #30363d;
+  --main-border-color: #30363d;
+
+  // Card
+  --card-bg:          #161b22;
+  --card-border-color: #30363d;
+  --card-shadow:      0 1px 3px rgba(0, 0, 0, 0.3);
+  --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  // Tags
+  --tag-bg:           #21262d;
+  --tag-border:       #30363d;
+  --tag-color:        #8b949e;
+  --tag-hover-bg:     #58a6ff;
+  --tag-hover-color:  #0d1117;
+
+  // Sidebar
+  --sidebar-muted-color:  #6e7681;
+  --nav-cursor-color:     #58a6ff;
+  --sidebar-btn-bg:       #21262d;
+
+  // Code
+  --code-bg:          #161b22;
+  --code-color:       #c9d1d9;
+  --code-header-bg:   #21262d;
+  --highlight-bg-color: #161b22;
+
+  // Misc
+  --btn-active-color: #58a6ff;
+  --checkbox-color:   #58a6ff;
+  --toc-highlight:    #58a6ff;
+}
+
+// ──────────────────────────────────────────────
+// TIPOGRAFIA
+// ──────────────────────────────────────────────
+body {
+  font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.post-title,
+.card-title,
+#sidebar .site-title,
+.page-title {
+  font-family: 'Signika Negative', sans-serif !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--heading-color);
+}
+
+// ──────────────────────────────────────────────
+// SIDEBAR
+// ──────────────────────────────────────────────
+#sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+
+  .site-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    letter-spacing: -0.03em;
+  }
+
+  .site-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    line-height: 1.5;
+    margin-top: 0.4rem;
+  }
+
+  .nav-link {
+    font-family: 'Heebo', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &.active,
+    &:hover {
+      color: var(--nav-cursor-color);
+      background: var(--sidebar-btn-bg);
+    }
+  }
+
+  .sidebar-bottom {
+    .icon-border {
+      background: var(--border-color);
+    }
+  }
+}
+
+// Avatar arredondado com borda sutil
+.avatar {
+  img {
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// POST CARDS (listagem)
+// ──────────────────────────────────────────────
+.post-preview {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+  }
+
+  .post-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    text-decoration: none;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+
+  .post-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    font-weight: 500;
+  }
+
+  .post-content {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.7;
+    margin-top: 0.5rem;
+  }
+}
+
+// ──────────────────────────────────────────────
+// TAGS E CATEGORIAS
+// ──────────────────────────────────────────────
+.post-tags,
+.categories {
+  .tag,
+  a {
+    display: inline-block;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--tag-color);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-family: 'Heebo', sans-serif;
+
+    &:hover {
+      background: var(--tag-hover-bg);
+      color: var(--tag-hover-color);
+      border-color: var(--tag-hover-bg);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// TOPBAR
+// ──────────────────────────────────────────────
+#topbar {
+  background: var(--topbar-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+
+  #breadcrumb {
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-muted-color);
+
+    a {
+      color: var(--link-color);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// POST INDIVIDUAL
+// ──────────────────────────────────────────────
+.post {
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+  }
+
+  .post-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted-color);
+    font-weight: 500;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+  }
+
+  .content {
+    font-size: 1.025rem;
+    line-height: 1.85;
+    color: var(--text-color);
+
+    p { margin-bottom: 1.4rem; }
+
+    a {
+      color: var(--link-color);
+      text-decoration: underline;
+      text-decoration-color: var(--link-underline-color);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+
+      &:hover {
+        text-decoration-color: var(--link-color);
+      }
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    img {
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    blockquote {
+      border-left: 3px solid var(--link-color);
+      padding: 0.75rem 1.25rem;
+      background: var(--code-bg);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-muted-color);
+      font-style: italic;
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// CODE BLOCKS
+// ──────────────────────────────────────────────
+div.highlight,
+figure.highlight {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+
+  pre {
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+}
+
+code.highlighter-rouge {
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.875em;
+  color: var(--code-color);
+}
+
+// ──────────────────────────────────────────────
+// TOC (Table of Contents)
+// ──────────────────────────────────────────────
+#toc-wrapper {
+  border-left: 2px solid var(--border-color);
+  padding-left: 1rem;
+
+  #toc {
+    font-size: 0.85rem;
+    font-family: 'Heebo', sans-serif;
+
+    li {
+      line-height: 1.6;
+
+      &.toc-active > a {
+        color: var(--toc-highlight);
+        font-weight: 600;
+      }
+    }
+
+    a {
+      color: var(--text-muted-color);
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--toc-highlight);
+      }
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// PAGINAÇÃO
+// ──────────────────────────────────────────────
+.pagination {
+  .page-item {
+    .page-link {
+      font-family: 'Heebo', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      background: var(--card-bg);
+      padding: 0.4rem 0.85rem;
+      transition: all 0.2s ease;
+      margin: 0 2px;
+
+      &:hover {
+        background: var(--link-color);
+        color: #fff;
+        border-color: var(--link-color);
+      }
+    }
+
+    &.active .page-link {
+      background: var(--link-color);
+      border-color: var(--link-color);
+      color: #fff;
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// FOOTER
+// ──────────────────────────────────────────────
+footer {
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-muted-color);
+  border-top: 1px solid var(--border-color);
+}
+
+// ──────────────────────────────────────────────
+// SCROLLBAR (webkit)
+// ──────────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+
+  &:hover {
+    background: var(--text-muted-color);
+  }
+}
+
+// ──────────────────────────────────────────────
+// AJUSTES RESPONSIVOS
+// ──────────────────────────────────────────────
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .post .post-title {
+    font-size: 1.6rem;
+  }
+
+  .post-preview .post-title {
+    font-size: 1.1rem;
+  }
+}
