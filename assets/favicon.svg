@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Fundo arredondado escuro -->
+  <rect width="100" height="100" rx="18" fill="#0f172a"/>
+  <!-- Detalhe decorativo: barra superior da cor do link -->
+  <rect x="0" y="0" width="100" height="6" rx="3" fill="#5badf0"/>
+  <!-- Iniciais TY em azul do tema -->
+  <text
+    x="50"
+    y="62"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="44"
+    font-weight="800"
+    fill="#5badf0"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    letter-spacing="-2">TY</text>
+</svg>

@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<div class="categories-page">
+  <h1>Categorias</h1>
+
+  {% assign sorted_cats = site.categories | sort %}
+  {% for cat in sorted_cats %}
+  {% assign cat_name = cat[0] %}
+  {% assign cat_posts = cat[1] %}
+  <div class="category-section">
+    <h2 class="category-section-title">{{ cat_name }}</h2>
+    {% for post in cat_posts %}
+    <div class="archive-item">
+      <time class="archive-date" datetime="{{ post.date | date_to_xmlschema }}">
+        {{ post.date | date: "%d %b, %Y" }}
+      </time>
+      <div class="archive-item-body">
+        <p class="archive-item-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>

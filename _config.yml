@@ -1,7 +1,6 @@
 # The Site Configuration
 
-# Import the theme
-theme: jekyll-theme-chirpy
+# Tema personalizado (layouts em _layouts/ sobrescrevem qualquer gem)
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -16,7 +15,13 @@ timezone: America/Sao_Paulo
 #favicon: /assets/images/favicon/favicon.ico
 title: Thallyson Yakko | DevOps Engineer # the main title
 
-tagline: Compartilhando minha jornada rumo às certificações AWS SAA e SysOps, com dicas e estudos práticos sobre DevOps e Cloud Computing.
+tagline: DevOps Engineer · Kubernetes · GCP · Open Source
+
+bio: >-
+  Em transição do júnior ao pleno — compartilhando aprendizados reais em
+  troubleshooting e arquitetura de sistemas. Apaixonado por open source,
+  Kubernetes e GCP. Exploro Python e Django nas pausas, e ainda não cansei
+  de entender como redes realmente funcionam.
 
 description: >-# used by seo meta and the atom feed
   Blog sobre DevOps, Cloud Computing e minha jornada rumo às certificações AWS. 
@@ -96,7 +101,7 @@ theme_mode: [dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: /assets/avatar.jpeg"
+avatar: /assets/avatar.png
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -146,6 +151,13 @@ pwa:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
 paginate: 10
+paginate_path: "/page/:num/"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
 
 # The base URL of your site
 baseurl: ""
@@ -223,13 +235,4 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 
-defaults:
-  - scope:
-      path: "_posts"
-    values:
-      open_graph: 
-        title: "{{ page.title }}"
-        description: "{{ page.excerpt }}"
-        image: "{{ page.image }}"
-        url: "{{ page.url }}"
 
